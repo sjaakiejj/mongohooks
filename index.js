@@ -19,10 +19,15 @@ exports = module.exports = function (collection) {
       updateFilters = [],
       findFilters = [],
       documentFilters = [],
-      listeners = { save: [], insert: [], update: [] },
+      removeFilters = [],
+      listeners = { save: [], insert: [], update: [], remove: [] },
       chainer, injectBeforeFilters, injectFindFilters;
 
   chainer = {
+    remove: function(filter) {
+      removeFilters.push(filter);
+      return chainer;
+    },
     save: function (filter) {
       saveFilters.push(filter);
       return chainer;
@@ -160,6 +165,7 @@ exports = module.exports = function (collection) {
   };
 
   collection.save   = injectBeforeFilters(collection.save, saveFilters, listeners.save);
+  collection.remove   = injectBeforeFilters(collection.remove, removeFilters, listeners.remove);
   collection.insert = injectBeforeFilters(collection.insert, insertFilters, listeners.insert);
   collection.update = injectBeforeFilters(collection.update, updateFilters, listeners.update);
   collection.find   = injectFindFilters(collection.find);

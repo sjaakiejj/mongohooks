@@ -247,6 +247,26 @@ describe('mongohooks', function () {
       });
     });
 
+    it('should call listener for remove events', function (done) {
+      var cbCount = 2;
+      var assertDone = function () {
+        if (!--cbCount) done();
+      };
+      mongohooks.on('remove', function (err, result, lastErrorObject, document) {
+        assert.ifError(err);
+        assert.document(result);
+        assert.equal(lastErrorObject.n, 0);
+        assert.deepEqual(document, { foo: 1 });
+        assertDone();
+      });
+      db.mongohooks.remove({ foo: 1 }, function (err, result) {
+        assert.ifError(err);
+        assert.document(result);
+        assertDone();
+      });
+    });
+
+
     it('should call listener for update events', function (done) {
       var cbCount = 2;
       var assertDone = function () {

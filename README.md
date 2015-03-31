@@ -3,6 +3,8 @@
 A thin listener and before/after filter extension for the
 [mongojs](https://github.com/mafintosh/mongojs) node-module.
 
+Note: This is a fork of the original project. Main purpose is to add a remove handler.
+
 [![build
 status](https://secure.travis-ci.org/watson/mongohooks.png)](http://travis-ci.org/watson/mongohooks)
 
