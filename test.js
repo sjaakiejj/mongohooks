@@ -254,14 +254,13 @@ describe('mongohooks', function () {
       };
       mongohooks.on('remove', function (err, result, lastErrorObject, document) {
         assert.ifError(err);
-        assert.document(result);
-        assert.equal(lastErrorObject.n, 0);
-        assert.deepEqual(document, { foo: 1 });
+        assert.equal(lastErrorObject.foo, 1);
+        assert.deepEqual(result, { n: 1 });
         assertDone();
       });
       db.mongohooks.remove({ foo: 1 }, function (err, result) {
         assert.ifError(err);
-        assert.document(result);
+        assert.equal(result.n, 1);
         assertDone();
       });
     });
